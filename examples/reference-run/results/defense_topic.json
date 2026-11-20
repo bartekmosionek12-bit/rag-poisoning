@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "defense": "topic_centrality",
+    "z_threshold": 2.0,
+    "reference_mean": 0.2937,
+    "reference_sd": 0.1026,
+    "incoming_flagged": "0/3",
+    "flagged_incoming": [],
+    "false_positives": []
+  },
+  "docs": {
+    "cand_A_word_greedy": {
+      "mean_sim": 0.4472,
+      "z_vs_topic_docs": 1.5,
+      "flagged": false,
+      "incoming": true
+    },
+    "cand_C_word_subst_only": {
+      "mean_sim": 0.4365,
+      "z_vs_topic_docs": 1.39,
+      "flagged": false,
+      "incoming": true
+    },
+    "fin_risk_disclosure": {
+      "mean_sim": 0.4081,
+      "z_vs_topic_docs": 1.54,
+      "flagged": false,
+      "incoming": false
+    },
+    "cand_B_sentence_greedy": {
+      "mean_sim": 0.3983,
+      "z_vs_topic_docs": 1.02,
+      "flagged": false,
+      "incoming": true
+    },
+    "fin_investing_basics": {
+      "mean_sim": 0.3809,
+      "z_vs_topic_docs": 1.04,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_portfolio_diversification": {
+      "mean_sim": 0.2924,
+      "z_vs_topic_docs": -0.01,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_mortgage_considerations": {
+      "mean_sim": 0.2203,
+      "z_vs_topic_docs": -0.84,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_retirement_accounts": {
+      "mean_sim": 0.167,
+      "z_vs_topic_docs": -1.85,
+      "flagged": false,
+      "incoming": false
+    }
+  }
+}

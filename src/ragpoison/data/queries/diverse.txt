@@ -1,0 +1,51 @@
+# 50 queries across every topic in the corpus, used by the global outlier defense.
+how do I start investing
+what are the risks of investing
+fixed vs adjustable mortgage
+how to diversify a portfolio
+roth ira explained
+can I lose money in the stock market
+how much house can I afford
+what is an index fund
+how do I make a sourdough starter
+why is my bread dense
+how to hold a chef's knife
+how to dice an onion
+how long to bake bread in a dutch oven
+how much sun do tomatoes need
+what causes blossom end rot
+how to start a compost pile
+what can I put in compost
+should I prune tomato suckers
+how to pack a carry-on for a week
+what to bring on a long flight
+how to get over jet lag
+best way to sleep on a plane
+do I need a power adapter in europe
+how to start running as a beginner
+how to avoid running injuries
+beginner strength training program
+how to do a proper squat
+how many days a week should I lift
+how to create a python virtual environment
+what is a requirements.txt file
+how to use git branches
+what is a pull request
+how to make a strong password
+is sms two factor authentication safe
+who invented the printing press
+how did printing change europe
+how does photosynthesis work
+what is the calvin cycle
+why do volcanoes erupt
+what is a pyroclastic flow
+how to house train a puppy
+how to teach a dog to stay
+how to lower my electricity bill
+are led bulbs worth it
+easiest guitar chords for beginners
+how to switch guitar chords faster
+what are some tips for beginners
+what should I watch out for
+how do I get better at this
+what are common mistakes to avoid

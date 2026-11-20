@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "n_queries": 14,
+    "mode": "offline simulation",
+    "target_in_top3_pct": 100.0,
+    "target_rank1_pct": 92.9,
+    "poison_in_top3_pct": 0.0,
+    "poison_rank1_pct": 0.0
+  },
+  "candidates": {
+    "cand_A_word_greedy": {
+      "n_queries": 14,
+      "mode": "offline simulation",
+      "target_in_top3_pct": 92.9,
+      "target_rank1_pct": 71.4,
+      "poison_in_top3_pct": 100.0,
+      "poison_rank1_pct": 28.6,
+      "mean_cos_to_cluster": 0.4424,
+      "cos_to_target": 0.6524,
+      "passes": true
+    },
+    "cand_B_sentence_greedy": {
+      "n_queries": 14,
+      "mode": "offline simulation",
+      "target_in_top3_pct": 92.9,
+      "target_rank1_pct": 78.6,
+      "poison_in_top3_pct": 85.7,
+      "poison_rank1_pct": 21.4,
+      "mean_cos_to_cluster": 0.396,
+      "cos_to_target": 0.5955,
+      "passes": true
+    },
+    "cand_C_word_subst_only": {
+      "n_queries": 14,
+      "mode": "offline simulation",
+      "target_in_top3_pct": 92.9,
+      "target_rank1_pct": 71.4,
+      "poison_in_top3_pct": 92.9,
+      "poison_rank1_pct": 21.4,
+      "mean_cos_to_cluster": 0.4328,
+      "cos_to_target": 0.6479,
+      "passes": true
+    },
+    "ALL_CANDIDATES": {
+      "n_queries": 14,
+      "mode": "offline simulation",
+      "target_in_top3_pct": 78.6,
+      "target_rank1_pct": 71.4,
+      "poison_in_top3_pct": 100.0,
+      "poison_rank1_pct": 28.6,
+      "passes": true
+    }
+  }
+}
