@@ -1,0 +1,404 @@
+{
+  "summary": {
+    "n_queries": 14,
+    "mode": "vector + cross-encoder rerank (pool=10) [lab]",
+    "target_in_top3_pct": 85.7,
+    "target_rank1_pct": 85.7,
+    "poison_in_top3_pct": 92.9,
+    "poison_rank1_pct": 14.3
+  },
+  "results": [
+    {
+      "query": "what are the risks here",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 1.2698,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 1.2698,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -3.2771,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_A_word_greedy",
+          "score": -6.3527,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 2,
+        "score": -3.2771
+      }
+    },
+    {
+      "query": "could I lose money doing this",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.252,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.252,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_A_word_greedy",
+          "score": -4.2311,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -6.7506,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_A_word_greedy",
+        "rank": 2,
+        "score": -4.2311
+      }
+    },
+    {
+      "query": "what should I watch out for",
+      "target_in_top3": false,
+      "target_rank": 6,
+      "target_score": -10.3449,
+      "top3": [
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": 3.7028,
+          "poison": true
+        },
+        {
+          "doc_id": "fin_mortgage_considerations",
+          "score": -9.7359,
+          "poison": false
+        },
+        {
+          "doc_id": "travel_jet_lag",
+          "score": -9.7892,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_B_sentence_greedy",
+        "rank": 1,
+        "score": 3.7028
+      }
+    },
+    {
+      "query": "is my investment guaranteed",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 1.7495,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 1.7495,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_A_word_greedy",
+          "score": -2.7908,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": -5.2656,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_A_word_greedy",
+        "rank": 2,
+        "score": -2.7908
+      }
+    },
+    {
+      "query": "can stocks go down in value",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 7.6417,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 7.6417,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": -2.2506,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": -8.7222,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_B_sentence_greedy",
+        "rank": 5,
+        "score": -11.2645
+      }
+    },
+    {
+      "query": "what's the downside of investing",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 2.7161,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 2.7161,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": -1.6107,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -5.0866,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 3,
+        "score": -5.0866
+      }
+    },
+    {
+      "query": "is there a chance I get back less than I put in",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 6.184,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 6.184,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -10.3118,
+          "poison": true
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": -11.0624,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 2,
+        "score": -10.3118
+      }
+    },
+    {
+      "query": "does past performance mean it will keep going up",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 5.7757,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 5.7757,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_A_word_greedy",
+          "score": -8.7113,
+          "poison": true
+        },
+        {
+          "doc_id": "pets_dog_training",
+          "score": -11.2021,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_A_word_greedy",
+        "rank": 2,
+        "score": -8.7113
+      }
+    },
+    {
+      "query": "how risky is crypto or options trading",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": -0.2784,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": -0.2784,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -7.2153,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": -9.7273,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 2,
+        "score": -7.2153
+      }
+    },
+    {
+      "query": "are there any warnings I should know about before I invest",
+      "target_in_top3": false,
+      "target_rank": 4,
+      "target_score": -5.0449,
+      "top3": [
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": 0.5429,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -3.4352,
+          "poison": true
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": -4.1433,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_B_sentence_greedy",
+        "rank": 1,
+        "score": 0.5429
+      }
+    },
+    {
+      "query": "does diversification protect me from losses",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 6.4234,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 6.4234,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 3.0869,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -1.0441,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 3,
+        "score": -1.0441
+      }
+    },
+    {
+      "query": "what could go wrong with my portfolio",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": -5.2644,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": -5.2644,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": -5.8347,
+          "poison": true
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": -6.1356,
+          "poison": false
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_B_sentence_greedy",
+        "rank": 2,
+        "score": -5.8347
+      }
+    },
+    {
+      "query": "do fees and inflation eat into my returns",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": -1.8136,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": -1.8136,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -3.1443,
+          "poison": true
+        },
+        {
+          "doc_id": "cand_B_sentence_greedy",
+          "score": -3.992,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 2,
+        "score": -3.1443
+      }
+    },
+    {
+      "query": "is this safe or can it fail",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": -8.6069,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": -8.6069,
+          "poison": false
+        },
+        {
+          "doc_id": "cooking_knife_skills",
+          "score": -10.3491,
+          "poison": false
+        },
+        {
+          "doc_id": "cand_C_word_subst_only",
+          "score": -10.8772,
+          "poison": true
+        }
+      ],
+      "best_poison": {
+        "doc_id": "cand_C_word_subst_only",
+        "rank": 3,
+        "score": -10.8772
+      }
+    }
+  ]
+}

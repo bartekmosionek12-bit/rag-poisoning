@@ -1,0 +1,11 @@
+# Defender-side finance queries for the in-topic centrality defense.
+# Taken from the finance slice of diverse.txt, so they are disjoint from both
+# the attacker cluster and the canary set.
+how do I start investing
+what are the risks of investing
+fixed vs adjustable mortgage
+how to diversify a portfolio
+roth ira explained
+can I lose money in the stock market
+how much house can I afford
+what is an index fund

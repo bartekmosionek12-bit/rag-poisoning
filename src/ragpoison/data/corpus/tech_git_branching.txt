@@ -1,0 +1,1 @@
+Git branching workflow. Create a new branch for each feature or bug fix so the main branch stays stable. Commit small, focused changes with descriptive messages. Before merging, rebase or merge the latest main into your branch and run the tests. Pull requests let teammates review code before it lands. Delete branches after they are merged to keep the repository tidy.

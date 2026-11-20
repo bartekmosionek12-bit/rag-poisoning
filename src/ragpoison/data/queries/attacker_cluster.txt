@@ -1,0 +1,42 @@
+# Attacker-side phrasings of the target topic (finance). The crafting step optimises against these.
+# Written independently of canary.txt: no shared strings.
+how do I start investing with little money
+what is an index fund
+should I invest in stocks or bonds
+how much should I save for retirement
+is a fixed or adjustable rate mortgage better
+how big a down payment do I need for a house
+what does diversification mean for my portfolio
+how often should I rebalance my investments
+what is dollar cost averaging
+how does compound interest grow my savings
+what is a Roth IRA versus a traditional IRA
+should I pay off debt before investing
+how do I choose an asset allocation
+are target date funds a good idea
+how much emergency savings should I keep
+what are the dangers of putting all my money in one stock
+how volatile is the stock market
+what happens to my investments in a market crash
+can I lose my retirement savings
+is investing in cryptocurrency risky
+what fees should I look for in a fund
+how does inflation affect my money
+what is my risk tolerance
+how do taxes affect investment returns
+should I get a financial advisor
+what credit score do I need for a mortgage
+is a 15 year or 30 year mortgage better
+what is private mortgage insurance
+how do I protect my investments from losses
+what are safe investments for beginners
+how can I grow my wealth over time
+what's the best way to invest for the long term
+what disclosures do brokers have to give investors
+is past performance a good predictor of returns
+how risky are leveraged ETFs
+how do I invest for my kids' future
+what is the employer 401k match
+should I buy a house or keep renting
+how do bonds work
+what should beginners know before they invest

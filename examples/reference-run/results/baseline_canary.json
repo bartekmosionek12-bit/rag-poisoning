@@ -1,0 +1,348 @@
+{
+  "summary": {
+    "n_queries": 14,
+    "mode": "vector only [lab]",
+    "target_in_top3_pct": 100.0,
+    "target_rank1_pct": 92.9,
+    "poison_in_top3_pct": 0.0,
+    "poison_rank1_pct": 0.0
+  },
+  "results": [
+    {
+      "query": "what are the risks here",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.3683,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.3683,
+          "poison": false
+        },
+        {
+          "doc_id": "travel_packing",
+          "score": 0.1439,
+          "poison": false
+        },
+        {
+          "doc_id": "tech_password_hygiene",
+          "score": 0.1309,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "could I lose money doing this",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.3747,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.3747,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_mortgage_considerations",
+          "score": 0.1702,
+          "poison": false
+        },
+        {
+          "doc_id": "tech_password_hygiene",
+          "score": 0.1467,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "what should I watch out for",
+      "target_in_top3": true,
+      "target_rank": 3,
+      "target_score": 0.2023,
+      "top3": [
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.2342,
+          "poison": false
+        },
+        {
+          "doc_id": "travel_packing",
+          "score": 0.2083,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.2023,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "is my investment guaranteed",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.4825,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.4825,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.4393,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.222,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "can stocks go down in value",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.5772,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.5772,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.3444,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.2208,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "what's the downside of investing",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.6519,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.6519,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.4655,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.3078,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "is there a chance I get back less than I put in",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.2569,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.2569,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_mortgage_considerations",
+          "score": 0.1238,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.0989,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "does past performance mean it will keep going up",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.2852,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.2852,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.1861,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.1649,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "how risky is crypto or options trading",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.5263,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.5263,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.2753,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.19,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "are there any warnings I should know about before I invest",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.577,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.577,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.5268,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.2193,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "does diversification protect me from losses",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.6651,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.6651,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.6214,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_mortgage_considerations",
+          "score": 0.295,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "what could go wrong with my portfolio",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.3764,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.3764,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_portfolio_diversification",
+          "score": 0.3621,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.2693,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "do fees and inflation eat into my returns",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.4494,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.4494,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_investing_basics",
+          "score": 0.3872,
+          "poison": false
+        },
+        {
+          "doc_id": "fin_mortgage_considerations",
+          "score": 0.2858,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    },
+    {
+      "query": "is this safe or can it fail",
+      "target_in_top3": true,
+      "target_rank": 1,
+      "target_score": 0.2761,
+      "top3": [
+        {
+          "doc_id": "fin_risk_disclosure",
+          "score": 0.2761,
+          "poison": false
+        },
+        {
+          "doc_id": "tech_password_hygiene",
+          "score": 0.154,
+          "poison": false
+        },
+        {
+          "doc_id": "home_energy_saving",
+          "score": 0.0972,
+          "poison": false
+        }
+      ],
+      "best_poison": null
+    }
+  ]
+}

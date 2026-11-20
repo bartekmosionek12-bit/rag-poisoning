@@ -1,0 +1,190 @@
+{
+  "summary": {
+    "defense": "global_outlier",
+    "z_threshold": 2.0,
+    "reference_mean": 0.0829,
+    "reference_sd": 0.0326,
+    "incoming_flagged": "0/3",
+    "flagged_incoming": [],
+    "false_positives": [
+      "fin_investing_basics"
+    ]
+  },
+  "docs": {
+    "fin_investing_basics": {
+      "mean_sim": 0.1567,
+      "z_vs_corpus": 2.26,
+      "z_vs_topic_docs": 1.4,
+      "flagged": true,
+      "incoming": false
+    },
+    "cand_B_sentence_greedy": {
+      "mean_sim": 0.132,
+      "z_vs_corpus": 1.5,
+      "z_vs_topic_docs": 0.85,
+      "flagged": false,
+      "incoming": true
+    },
+    "music_guitar_chords": {
+      "mean_sim": 0.1246,
+      "z_vs_corpus": 1.28,
+      "z_vs_topic_docs": 0.68,
+      "flagged": false,
+      "incoming": false
+    },
+    "fitness_running": {
+      "mean_sim": 0.1229,
+      "z_vs_corpus": 1.23,
+      "z_vs_topic_docs": 0.65,
+      "flagged": false,
+      "incoming": false
+    },
+    "cand_A_word_greedy": {
+      "mean_sim": 0.1228,
+      "z_vs_corpus": 1.22,
+      "z_vs_topic_docs": 0.64,
+      "flagged": false,
+      "incoming": true
+    },
+    "cooking_knife_skills": {
+      "mean_sim": 0.1221,
+      "z_vs_corpus": 1.2,
+      "z_vs_topic_docs": 0.63,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_risk_disclosure": {
+      "mean_sim": 0.1217,
+      "z_vs_corpus": 1.19,
+      "z_vs_topic_docs": 0.62,
+      "flagged": false,
+      "incoming": false
+    },
+    "cand_C_word_subst_only": {
+      "mean_sim": 0.1207,
+      "z_vs_corpus": 1.16,
+      "z_vs_topic_docs": 0.6,
+      "flagged": false,
+      "incoming": true
+    },
+    "travel_packing": {
+      "mean_sim": 0.1013,
+      "z_vs_corpus": 0.56,
+      "z_vs_topic_docs": 0.17,
+      "flagged": false,
+      "incoming": false
+    },
+    "gardening_tomatoes": {
+      "mean_sim": 0.091,
+      "z_vs_corpus": 0.25,
+      "z_vs_topic_docs": -0.06,
+      "flagged": false,
+      "incoming": false
+    },
+    "gardening_composting": {
+      "mean_sim": 0.0886,
+      "z_vs_corpus": 0.17,
+      "z_vs_topic_docs": -0.11,
+      "flagged": false,
+      "incoming": false
+    },
+    "fitness_strength": {
+      "mean_sim": 0.0865,
+      "z_vs_corpus": 0.11,
+      "z_vs_topic_docs": -0.16,
+      "flagged": false,
+      "incoming": false
+    },
+    "cooking_sourdough": {
+      "mean_sim": 0.0856,
+      "z_vs_corpus": 0.08,
+      "z_vs_topic_docs": -0.18,
+      "flagged": false,
+      "incoming": false
+    },
+    "home_energy_saving": {
+      "mean_sim": 0.0847,
+      "z_vs_corpus": 0.05,
+      "z_vs_topic_docs": -0.2,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_portfolio_diversification": {
+      "mean_sim": 0.0759,
+      "z_vs_corpus": -0.22,
+      "z_vs_topic_docs": -0.4,
+      "flagged": false,
+      "incoming": false
+    },
+    "travel_jet_lag": {
+      "mean_sim": 0.0745,
+      "z_vs_corpus": -0.26,
+      "z_vs_topic_docs": -0.43,
+      "flagged": false,
+      "incoming": false
+    },
+    "tech_password_hygiene": {
+      "mean_sim": 0.0725,
+      "z_vs_corpus": -0.32,
+      "z_vs_topic_docs": -0.47,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_mortgage_considerations": {
+      "mean_sim": 0.0713,
+      "z_vs_corpus": -0.36,
+      "z_vs_topic_docs": -0.5,
+      "flagged": false,
+      "incoming": false
+    },
+    "tech_git_branching": {
+      "mean_sim": 0.069,
+      "z_vs_corpus": -0.43,
+      "z_vs_topic_docs": -0.55,
+      "flagged": false,
+      "incoming": false
+    },
+    "pets_dog_training": {
+      "mean_sim": 0.0655,
+      "z_vs_corpus": -0.53,
+      "z_vs_topic_docs": -0.62,
+      "flagged": false,
+      "incoming": false
+    },
+    "science_photosynthesis": {
+      "mean_sim": 0.0651,
+      "z_vs_corpus": -0.55,
+      "z_vs_topic_docs": -0.63,
+      "flagged": false,
+      "incoming": false
+    },
+    "history_printing_press": {
+      "mean_sim": 0.0434,
+      "z_vs_corpus": -1.21,
+      "z_vs_topic_docs": -1.12,
+      "flagged": false,
+      "incoming": false
+    },
+    "fin_retirement_accounts": {
+      "mean_sim": 0.0431,
+      "z_vs_corpus": -1.22,
+      "z_vs_topic_docs": -1.12,
+      "flagged": false,
+      "incoming": false
+    },
+    "tech_python_venv": {
+      "mean_sim": 0.0322,
+      "z_vs_corpus": -1.56,
+      "z_vs_topic_docs": -1.36,
+      "flagged": false,
+      "incoming": false
+    },
+    "science_volcanoes": {
+      "mean_sim": 0.0265,
+      "z_vs_corpus": -1.73,
+      "z_vs_topic_docs": -1.49,
+      "flagged": false,
+      "incoming": false
+    }
+  }
+}
