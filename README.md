@@ -1,6 +1,6 @@
 # rag-poisoning
 
-`ragpoison` is a command-line tool that measures **embedding-space poisoning of a RAG store**
+`ragpoison` is a command-line tool, web UI and REST API that measures **embedding-space poisoning of a RAG store**
 and evaluates defenses against it. An attacker who can write documents into a vector
 database crafts text whose embedding sits on the centroid of a topic's queries. Those
 documents then rank highly for questions on that topic, including questions the attacker
@@ -8,7 +8,10 @@ never saw, and can push a legitimate document (here a financial risk disclosure)
 the top-k that the LLM gets to read.
 
 The tool crafts such documents against a corpus you control, injects them, measures what
-happened to retrieval, and scores three defenses on the same run.
+happened to retrieval, and scores three defenses on the same run. It can measure the bundled
+local store or any RAG service you run that is reachable over HTTP.
+
+![Inject & measure in the web UI](docs/ui-measure.png)
 
 > **Purpose.** This is a private research tool for defensive security work: understanding
 > how much write access to a RAG store is worth to an attacker, and testing detection and
@@ -50,7 +53,8 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu   # optional:
 pip install -e '.[dev]'
 ```
 
-Tested with Python 3.13, torch 2.15 (CPU), sentence-transformers 6.3, chromadb 1.5.9 and numpy 2.5.
+Tested with Python 3.13, torch 2.15 (CPU), sentence-transformers 6.3, chromadb 1.5.9, numpy 2.5,
+FastAPI 0.165 and uvicorn 0.54.
 
 ## Quick start
 
@@ -61,6 +65,114 @@ cat ragpoison-work/results/summary.md
 
 `run` rebuilds the store, so its numbers are reproducible: with the default RNG seed it
 produces the same three candidates and the same numbers as the reference run below.
+
+Or, in the browser:
+
+```bash
+ragpoison serve        # http://127.0.0.1:8765/   (OpenAPI docs at /docs)
+```
+
+## Web UI
+
+`ragpoison serve` starts a local server with a single-page UI that walks through the same
+steps as the CLI:
+
+| page | what you do there |
+|---|---|
+| **Target** | pick the local store (collection `lab` or `clean`, rebuild from the corpus) or a remote RAG API, and test the connection |
+| **Explore** | run any query and see the ranked context with POISON and TARGET marked; side by side with the clean collection |
+| **Craft poison** | run the three crafting methods with your seed, length cap and marker; see each candidate's text and score trajectory; add hand-written candidates |
+| **Validate offline** | simulate candidates against the canaries without touching any store, with per-query ranks |
+| **Inject & measure** | baseline canary run, inject the chosen candidates, measure again (optionally with the cross-encoder), and get the per-query diff |
+| **Defenses** | run the global outlier or in-topic centrality check and see which documents are caught, missed or falsely flagged |
+| **Run everything** | the full `run` pipeline with a live log |
+| **API** | endpoint list and `curl` examples |
+
+![Explore: the poisoned collection beside the clean one](docs/ui-explore.png)
+
+Long operations run as background jobs, one at a time; the bar at the bottom streams their
+log.
+
+## Testing a RAG service over HTTP
+
+Choose **Remote API** on the Target page (or pass a `remote` target to the API) to measure a
+RAG service you run instead of the bundled store. `ragpoison` needs one endpoint that returns
+ranked documents for a query, and optionally one that adds a document:
+
+```
+POST {base_url}{query_path}    {"query": "...", "k": 10}
+  -> {"results": [{"doc_id": "...", "score": 0.42, "text": "..."}, ...]}     best first
+
+POST {base_url}{ingest_path}   {"doc_id": "...", "text": "..."}               optional, any 2xx
+```
+
+The JSON keys (`results`, `doc_id`, `score`, `text`) and extra request headers such as an
+`Authorization` header are configurable. Without an ingest endpoint, add the candidates to
+the service yourself between the baseline and the second measurement. A result counts as
+poison when its id is one of the injected candidates or its text contains the
+`LAB-MARKER` string. Crafting and offline validation always run locally, against the
+embedding model you configure, so set `--embed-model` to the model your service uses. With
+the rerank box ticked, the documents the service returns are re-scored locally by the
+cross-encoder: a client-side rerank, which reranks the returned documents rather than the
+store's chunks, so its numbers can differ from the local rerank.
+
+Every `ragpoison serve` also exposes its own `lab` collection through exactly this contract
+at `/rag/query` and `/rag/ingest`, so you can try remote mode with two instances:
+
+```bash
+ragpoison --workdir victim serve --port 8766     # the "remote" RAG service
+ragpoison serve                                   # the tool; target http://127.0.0.1:8766,
+                                                  # paths /rag/query and /rag/ingest
+```
+
+Measured that way, the remote target gives the same numbers as the local one: poison in the
+top-3 on 100% of canaries, at rank 1 on 28.6%, target pushed out on 21.4%.
+
+## REST API
+
+Everything the UI does is a JSON call; the OpenAPI schema is at `/openapi.json` and
+interactive docs at `/docs`. Operations that take more than a moment (`build`, `craft`,
+`validate`, `canary`, `defend`, `run`) return `{"job_id": ...}`; poll
+`GET /api/jobs/{id}?since=N` for status, new log lines and the result.
+
+```bash
+# where would an LLM's context come from?
+curl -s localhost:8765/api/query -H 'Content-Type: application/json' \
+  -d '{"query": "could I lose money doing this", "k": 3}'
+
+# score a remote service on the canary set
+curl -s localhost:8765/api/canary -H 'Content-Type: application/json' -d '{
+  "target": {"kind": "remote", "base_url": "http://127.0.0.1:8766", "query_path": "/rag/query"},
+  "save_as": "remote_baseline.json"}'
+curl -s localhost:8765/api/jobs/<job_id>
+```
+
+| endpoint | purpose |
+|---|---|
+| `GET /api/status` | settings, corpus, candidates, saved results |
+| `POST /api/build` | rebuild a local collection (job) |
+| `POST /api/query` | ranked documents for one query on a target |
+| `GET /api/poison`, `PUT /api/poison/{name}`, `DELETE /api/poison/{name}` | candidates |
+| `POST /api/craft`, `POST /api/validate` | craft candidates; simulate them offline (jobs) |
+| `POST /api/inject` | write candidates into a target |
+| `POST /api/canary`, `POST /api/compare` | score a target on the canaries (job); diff two saved runs |
+| `POST /api/defend` | global outlier or in-topic centrality check (job) |
+| `POST /api/run` | the full pipeline (job) |
+| `GET /api/jobs/{id}`, `GET /api/results/{name}` | job status and log; saved result files |
+| `POST /rag/query`, `POST /rag/ingest` | the local store as a remote-contract RAG service |
+
+### Server safety
+
+A local server that can write into a vector store is itself an attack surface, so the
+server:
+
+* listens on `127.0.0.1` by default and refuses any other address unless `--token` (or
+  `RAGPOISON_TOKEN`) is set, in which case every `/api` and `/rag` call needs
+  `Authorization: Bearer <token>`;
+* rejects requests whose `Host` header is not loopback or the address it was started on,
+  which blocks DNS rebinding (add names with `--allow-host`);
+* accepts state-changing requests only as `application/json` and only from its own origin,
+  and sends no CORS headers, so a web page you visit cannot drive it.
 
 ## Commands
 
@@ -80,6 +192,7 @@ Every command takes the global options before the command name: `--workdir` (def
 | `ragpoison compare BEFORE AFTER --label L` | per-query diff of two canary runs, as JSON and a Markdown table |
 | `ragpoison defend {outlier,topic} [FILES...] [--z 2.0]` | evaluate a detection defense against the candidates (see below) |
 | `ragpoison run` | all of the above in order, then `results/summary.md` |
+| `ragpoison serve [--host] [--port 8765] [--token T]` | web UI and REST API (see below) |
 
 The same steps by hand:
 
@@ -193,7 +306,11 @@ qualitative signal about this attack class, not as general rates.
 
 ```
 src/ragpoison/
-  cli.py         command-line interface and the `run` pipeline
+  cli.py         command-line interface
+  service.py     every operation as a function, shared by the CLI and the server
+  server.py      FastAPI app: REST API, background jobs, /rag contract, request guard
+  targets.py     local Chroma target and remote HTTP target
+  web/           the single-page UI (plain HTML, CSS and JS, no build step)
   config.py      Settings: paths, models, chunking, target doc
   text.py        chunking and file loading (no ML dependencies)
   models.py      lazy sentence-transformers embedder and cross-encoder
@@ -203,7 +320,8 @@ src/ragpoison/
   metrics.py     canary scoring and run-to-run diff
   defenses.py    global outlier and in-topic centrality checks
   data/          demo corpus, query sets, sentence bank and seed texts
-tests/           unit tests with toy embeddings (no model download)
+tests/           unit and API tests with toy embeddings (no model download)
+docs/            UI screenshots
 examples/reference-run/   full output of `ragpoison run` with the default settings
 ```
 
@@ -213,7 +331,9 @@ examples/reference-run/   full output of `ragpoison run` with the default settin
 pytest
 ```
 
-The tests cover chunking, the crafting search (with a toy objective), canary scoring and
-diffing, the offline index and both detection defenses, using hand-built vectors. They need
-no model download and run in under a second. The end-to-end check is `ragpoison run`,
+The 22 tests cover chunking, the crafting search (with a toy objective), canary scoring and
+diffing, the offline index, both detection defenses, and the API: the request guard, the
+token, the full local flow, and remote mode against the server's own `/rag` endpoints. They
+use a toy bag-of-words embedder with a real Chroma store, need no model download and run in
+a few seconds. The end-to-end check is `ragpoison run`,
 compared against `examples/reference-run/results/summary.md`.

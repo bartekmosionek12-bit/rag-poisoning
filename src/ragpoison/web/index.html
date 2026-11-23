@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ragpoison</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo">◆</span> ragpoison <span class="muted" id="version"></span></div>
+  <button class="target-pill" id="target-pill" data-go="target" title="Change target"></button>
+  <div class="spacer"></div>
+  <span class="muted small" id="model-info"></span>
+</header>
+
+<div class="layout">
+  <nav class="sidebar" id="nav">
+    <a data-go="target"><span class="step">1</span>Target</a>
+    <a data-go="explore"><span class="step">2</span>Explore</a>
+    <a data-go="craft"><span class="step">3</span>Craft poison</a>
+    <a data-go="validate"><span class="step">4</span>Validate offline</a>
+    <a data-go="measure"><span class="step">5</span>Inject &amp; measure</a>
+    <a data-go="defend"><span class="step">6</span>Defenses</a>
+    <a data-go="run"><span class="step">▶</span>Run everything</a>
+    <a data-go="api"><span class="step">{}</span>API</a>
+    <p class="note">Research tool for stores you own. Payloads are inert marker strings.</p>
+  </nav>
+
+  <main id="main">
+
+  <!-- 1. TARGET -->
+  <section data-page="target">
+    <h1>Target</h1>
+    <p class="lede">Where retrieval is measured. <b>Local</b> uses the bundled ChromaDB store. <b>Remote</b> calls any
+      RAG service over HTTP that returns ranked documents for a query.</p>
+    <div class="seg" id="mode">
+      <button data-mode="local">Local store</button><button data-mode="remote">Remote API</button>
+    </div>
+
+    <div class="card" id="local-cfg">
+      <div class="row">
+        <label>Collection
+          <select id="l-collection"><option>lab</option><option>clean</option></select></label>
+        <button class="btn" id="l-build">Rebuild from corpus</button>
+        <button class="btn ghost" id="l-refresh">Refresh</button>
+      </div>
+      <p class="hint"><code>lab</code> is the collection that gets poisoned; <code>clean</code> stays untouched as a
+        baseline. Rebuilding drops every injected document.</p>
+      <div id="l-info"></div>
+    </div>
+
+    <div class="card" id="remote-cfg" hidden>
+      <div class="grid2">
+        <label>Base URL <input id="r-url" placeholder="http://127.0.0.1:8766"></label>
+        <label>Results to request (pool) <input id="r-pool" type="number" min="1" max="100" value="10"></label>
+        <label>Query path <input id="r-qpath" value="/query"></label>
+        <label><span>Ingest path <span class="muted">(empty = inject by hand)</span></span><input id="r-ipath" value="/ingest"></label>
+      </div>
+      <details><summary>Response mapping and headers</summary>
+        <div class="grid4">
+          <label>results key <input id="r-results" value="results"></label>
+          <label>id key <input id="r-id" value="doc_id"></label>
+          <label>score key <input id="r-score" value="score"></label>
+          <label>text key <input id="r-text" value="text"></label>
+        </div>
+        <label>Headers (JSON) <textarea id="r-headers" rows="2" placeholder='{"Authorization": "Bearer ..."}'></textarea></label>
+      </details>
+      <div class="row"><button class="btn" id="r-test">Test connection</button>
+        <button class="btn ghost" id="r-self">Use this server's /rag endpoints</button></div>
+      <p class="hint">Contract: <code>POST {query, k}</code> → <code>{"results": [{"doc_id", "score", "text"}]}</code>,
+        best first; ingest is <code>POST {doc_id, text}</code>. A second instance
+        (<code>ragpoison --workdir other serve --port 8766</code>) serves exactly this at <code>/rag/query</code> and
+        <code>/rag/ingest</code>. Poison is recognised by the injected ids or the marker in the text.</p>
+      <div id="r-info"></div>
+    </div>
+
+    <h2>Corpus</h2>
+    <div id="corpus" class="chips"></div>
+    <div id="doc-view" class="card doc" hidden></div>
+  </section>
+
+  <!-- 2. EXPLORE -->
+  <section data-page="explore" hidden>
+    <h1>Explore</h1>
+    <p class="lede">Ask the target anything and see what an LLM would get as context.</p>
+    <form class="row" id="q-form">
+      <input id="q" class="grow" placeholder="could I lose money doing this" autocomplete="off">
+      <label class="inline">k <input id="q-k" type="number" value="5" min="1" max="30" class="num"></label>
+      <label class="inline"><input type="checkbox" id="q-rerank"> rerank</label>
+      <label class="inline" id="q-side-wrap"><input type="checkbox" id="q-side"> side by side with <code>clean</code></label>
+      <button class="btn primary">Search</button>
+    </form>
+    <div class="chips small" id="q-canaries"></div>
+    <div class="cols" id="q-results"></div>
+  </section>
+
+  <!-- 3. CRAFT -->
+  <section data-page="craft" hidden>
+    <h1>Craft poison</h1>
+    <p class="lede">White-box greedy search for text whose embedding sits on the centroid of the attacker's
+      <span id="n-attacker"></span> topic queries. Runs offline; nothing is written to any store.</p>
+    <div class="card">
+      <div class="methods">
+        <label><input type="checkbox" value="A" checked><b>A</b> word greedy <span class="muted">substitute / insert / delete words. Strongest, unreadable.</span></label>
+        <label><input type="checkbox" value="B" checked><b>B</b> sentence greedy <span class="muted">picks whole human-written sentences. Readable.</span></label>
+        <label><input type="checkbox" value="C" checked><b>C</b> substitution only <span class="muted">keeps the sentence skeleton.</span></label>
+      </div>
+      <div class="grid4">
+        <label>Seed <input id="c-seed" type="number" value="1234"></label>
+        <label>Max chars <input id="c-max" type="number" value="480"></label>
+        <label class="span2">Marker payload <input id="c-marker" value="[LAB-MARKER poison-doc-{tag}]"></label>
+      </div>
+      <button class="btn primary" id="c-run">Craft candidates</button>
+      <span class="muted small">about a minute per word-level candidate on CPU</span>
+    </div>
+    <h2>Candidates</h2>
+    <div id="cands" class="cands"></div>
+    <details class="card"><summary>Add your own candidate</summary>
+      <label>Name <input id="cu-name" placeholder="cand_D_handwritten"></label>
+      <label>Text <textarea id="cu-text" rows="4" placeholder="Write a document, end it with a marker such as [LAB-MARKER poison-doc-D]"></textarea></label>
+      <button class="btn" id="cu-save">Save candidate</button>
+    </details>
+  </section>
+
+  <!-- 4. VALIDATE -->
+  <section data-page="validate" hidden>
+    <h1>Validate offline</h1>
+    <p class="lede">Predict what injection would do, using the same chunker and model in memory. No store is touched.
+      In the reference run this matched the live injection exactly.</p>
+    <div class="row"><div id="v-pick" class="chips"></div><button class="btn primary" id="v-run">Simulate</button></div>
+    <div id="v-out"></div>
+  </section>
+
+  <!-- 5. MEASURE -->
+  <section data-page="measure" hidden>
+    <h1>Inject &amp; measure</h1>
+    <p class="lede">Score the target on <span id="n-canary"></span> canary queries before and after injection. The
+      canaries were never shown to the attacker.</p>
+    <div class="steps">
+      <div class="card stepcard"><div class="stephead"><span class="step">1</span>Baseline</div>
+        <p class="muted small">Canary ranks on the target as it is now.</p>
+        <label class="inline"><input type="checkbox" id="m-rebuild" checked> rebuild local collection first</label>
+        <button class="btn" id="m-base">Measure baseline</button><div class="stat" id="m-base-s"></div></div>
+      <div class="card stepcard"><div class="stephead"><span class="step">2</span>Inject</div>
+        <div id="m-pick" class="chips small"></div>
+        <button class="btn danger" id="m-inject">Inject into target</button><div class="stat" id="m-inj-s"></div></div>
+      <div class="card stepcard"><div class="stephead"><span class="step">3</span>After</div>
+        <p class="muted small">Same canaries on the poisoned target.</p>
+        <label class="inline"><input type="checkbox" id="m-rerank"> with cross-encoder rerank</label>
+        <button class="btn" id="m-after">Measure after</button><div class="stat" id="m-after-s"></div></div>
+    </div>
+    <div id="m-diff"></div>
+  </section>
+
+  <!-- 6. DEFEND -->
+  <section data-page="defend" hidden>
+    <h1>Defenses</h1>
+    <p class="lede">Detection checks look at the incoming documents' embeddings before they are written. Reranking is
+      measured in <a data-go="measure">Inject &amp; measure</a> with the rerank box ticked.</p>
+    <div class="card row">
+      <div class="seg" id="d-kind"><button data-d="outlier">Global outlier</button><button data-d="topic">In-topic centrality</button></div>
+      <label class="inline">flag at z &gt; <input id="d-z" type="number" step="0.1" value="2.0" class="num"></label>
+      <button class="btn primary" id="d-run">Evaluate</button>
+    </div>
+    <p class="hint" id="d-hint"></p>
+    <div id="d-out"></div>
+  </section>
+
+  <!-- 7. RUN -->
+  <section data-page="run" hidden>
+    <h1>Run everything</h1>
+    <p class="lede">The full pipeline on the local store: rebuild, baseline, craft, validate, inject, measure, rerank,
+      both detection checks. About four minutes on four CPU cores; same as <code>ragpoison run</code>.</p>
+    <button class="btn primary" id="run-all">Run the full pipeline</button>
+    <div id="run-out"></div>
+  </section>
+
+  <!-- 8. API -->
+  <section data-page="api" hidden>
+    <h1>API</h1>
+    <p class="lede">Everything in this UI is a REST call. Interactive docs: <a href="/docs" target="_blank">/docs</a>,
+      schema: <a href="/openapi.json" target="_blank">/openapi.json</a>.</p>
+    <div class="card">
+      <h3>Rules</h3>
+      <ul>
+        <li>State-changing calls must send <code>Content-Type: application/json</code>; cross-origin calls are refused.</li>
+        <li>With <code>--token</code>, send <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+        <li>Long operations return <code>{"job_id"}</code>. Poll <code>GET /api/jobs/{id}?since=N</code> for status, new log lines and the result.</li>
+        <li>Every measuring call takes a <code>target</code>: <code>{"kind":"local","collection":"lab"}</code> or
+          <code>{"kind":"remote","base_url":"…","query_path":"/query","ingest_path":"/ingest"}</code>.</li>
+      </ul>
+    </div>
+    <div class="card"><h3>Examples</h3><pre id="api-ex"></pre></div>
+    <div class="card"><h3>Endpoints</h3><div id="api-list"></div></div>
+  </section>
+  </main>
+</div>
+
+<aside class="jobbar" id="jobbar" hidden>
+  <div class="jobhead"><span class="spinner" id="job-spin"></span><b id="job-kind"></b>
+    <span class="muted" id="job-status"></span><span class="spacer"></span>
+    <button class="btn ghost small" id="job-toggle">log</button></div>
+  <pre id="job-log" hidden></pre>
+</aside>
+<div class="toast" id="toast" hidden></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
